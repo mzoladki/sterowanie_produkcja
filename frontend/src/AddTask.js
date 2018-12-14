@@ -12,7 +12,6 @@ class AddTask extends Component {
         this.state = {
             isAddTaskModalOpened: false,
             device: '',
-            preparingTime: '',
             performTime: '',
             deliveryTime: '',
         }
@@ -28,14 +27,6 @@ class AddTask extends Component {
     }
 
 
-    deviceHolder = (e) => {
-        this.setState({device: e.target.value})
-    }
-    
-    preparingTimeHolder = (e) => {
-    this.setState({preparingTime: e.target.value})
-    }
-
     performTimeHolder = (e) => {
     this.setState({performTime: e.target.value})
 
@@ -48,8 +39,7 @@ class AddTask extends Component {
 
     submitHolder = (e) => {
         const task = {
-          device: this.state.device,
-          preparing_time: this.state.preparingTime,
+          device: 1,
           perform_time: this.state.performTime,
           delivery_time: this.state.deliveryTime
         }
@@ -62,7 +52,6 @@ class AddTask extends Component {
     
         this.setState({
           device: '',
-          preparingTime: '',
           performTime: '',
           deliveryTime: ''
         })
@@ -79,12 +68,7 @@ class AddTask extends Component {
               style={this.customStyles}
             >
               <form onSubmit={this.submitHolder}>
-                <div className='row'>
-                  <input type='text' onChange={this.deviceHolder} placeholder='device'/>
-                </div>
-                <div className='row'>
-                  <input type='text' onChange={this.preparingTimeHolder} placeholder='preparing time'/>
-                </div>
+
                 <div className='row'>
                   <input type='text' onChange={this.performTimeHolder} placeholder='perform time'/>
                 </div>

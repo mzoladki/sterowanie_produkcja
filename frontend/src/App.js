@@ -29,16 +29,19 @@ class App extends Component {
     }
     
     axios.get('http://0.0.0.0:8000/api/tasks/').then(res => {
-      let numberOfDevices = res.data[res.data.length-1].device
-      let table = []
-      for(let i=0;i<numberOfDevices;i++){
-        table.push([])
+      console.log(res.data)
+      if (res.data.length > 0){
+        let numberOfDevices = res.data[res.data.length-1].device
+        let table = []
+        for(let i=0;i<numberOfDevices;i++){
+          table.push([])
+        }
+        res.data.forEach(element => {
+          table[element.device-1].push(element)
+        });
+  
+        this.setState({data: table});
       }
-      res.data.forEach(element => {
-        table[element.device-1].push(element)
-      });
-
-      this.setState({data: table});
     });
   }
 
@@ -60,12 +63,6 @@ class App extends Component {
 
   }
 
-  taskDeviceHandler = (e) => {
-    let task = this.state.task
-    task.device = e.target.value
-    this.setState({task: task})
-
-  }
   taskDeliveryTimeHandler = (e) => {
     let task = this.state.task
     task.delivery_time = e.target.value
@@ -76,11 +73,7 @@ class App extends Component {
     task.perform_time = e.target.value
     this.setState({task: task})
   }
-  taskPreparingTimeHandler = (e) => {
-    let task = this.state.task
-    task.preparing_time = e.target.value
-    this.setState({task: task})
-  }
+
 
   submitHandler = (e) => {
     if (this.state.deletingMode == true){
@@ -93,8 +86,7 @@ class App extends Component {
       console.log(this.state.task)
       axios.put('http://0.0.0.0:8000/api/task-detail/', {
         id: this.state.task.id,
-        device: this.state.task.device,
-        preparing_time: this.state.task.preparing_time,
+        device: 1,
         perform_time: this.state.task.perform_time,
         delivery_time: this.state.task.delivery_time
       }).then( (res) => {
@@ -110,10 +102,8 @@ class App extends Component {
         <div>
           <form onSubmit={this.submitHandler}>
             <h3>Details</h3>
-            <p><input onChange={ this.taskDeviceHandler } type='text' value={task.device} /></p>
-            <p><input onChange={ this.taskDeliveryTimeHandler } type='text' value={task.delivery_time} /></p>
             <p><input onChange={ this.taskPerformTimeHandler } type='text' value={task.perform_time} /></p>
-            <p><input onChange={ this.taskPreparingTimeHandler } type='text' value={task.preparing_time} /></p>
+            <p><input onChange={ this.taskDeliveryTimeHandler } type='text' value={task.delivery_time} /></p>
             <button className='btn btn-primary'> Change </button>
             <button onClick={ this.activateDeleteMode } className='btn btn-danger'> Delete </button>
           </form>

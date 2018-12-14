@@ -9,7 +9,6 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'device',
-            'preparing_time',
             'perform_time',
             'delivery_time'
         )

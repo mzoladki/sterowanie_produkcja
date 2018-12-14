@@ -20,13 +20,13 @@ class DevicesView(APIView):
 class TasksView(APIView):
 
     def get(self, request, format=None):
-        tasks = Tasks.objects.all().order_by('device')
+        tasks = Tasks.objects.all().order_by('device', '-perform_time')
+
         serializer = TaskSerializer(tasks, many=True)
         return JsonResponse(serializer.data, safe=False)
 
     def post(self, request, format=None):
         task = request.data['task']
-        print(task)
         serializer = TaskSerializer(data=task)
         if serializer.is_valid():
             serializer.save()
@@ -45,8 +45,6 @@ class TaskDetailView(APIView):
 
     def put(self,request, format=None):
         task = Tasks.objects.get(pk=request.data['id'])
-        print(task)
-        print(request.data)
         serializer = self.serializer_class(task, data=request.data)
         if serializer.is_valid():
             serializer.save()
