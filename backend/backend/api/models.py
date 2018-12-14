@@ -17,6 +17,7 @@ class Tasks(models.Model):
     def __str__(self):
         return 'device_id: {}, id: {} r={}, q={}'.format(self.device.id, self.id, self.perform_time, self.delivery_time)
 
+@receiver(post_delete, sender=Tasks)
 @receiver(post_save, sender=Tasks)
 def task_post_save_handler(sender, **kwargs):
     post_save.disconnect(task_post_save_handler, sender=sender)
@@ -28,19 +29,6 @@ def task_post_save_handler(sender, **kwargs):
     schedule_tasks(tasks, list_of_devices)
 
     post_save.connect(task_post_save_handler, sender=sender)
-
-@receiver(post_delete, sender=Tasks)
-def task_post_delete_handler(sender, **kwargs):
-    post_delete.disconnect(task_post_delete_handler, sender=sender)
-    tasks = Tasks.objects.all().order_by('-perform_time')
-
-    number_of_devices = Device.objects.all().count()
-    list_of_devices = [[] for i in range(number_of_devices)]
-
-    schedule_tasks(tasks, list_of_devices)
-
-    post_delete.connect(task_post_delete_handler, sender=sender)
-
 
 def schedule_tasks(tasks, list_of_devices):
     for task in tasks:

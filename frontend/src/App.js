@@ -76,7 +76,7 @@ class App extends Component {
 
 
   submitHandler = (e) => {
-    if (this.state.deletingMode == true){
+    if (this.state.deletingMode === true){
       let url = 'http://0.0.0.0:8000/api/task-detail/?id=' + this.state.task.id
       axios.delete(url).then( (res) => {
         console.log(res)
@@ -125,7 +125,7 @@ class App extends Component {
               this.state.data.map((tasks, index) => {
                 return <div className="row Tasks" key={index}> <button>Device: {index + 1}</button>{tasks.map((task, index)=> {
                   let divStyle = {
-                    width: task.perform_time * 10,
+                    width: task.perform_time * 20 + 1,
                   }
                 return (
                   <button key={task.id} id={task.id} onClick={() => this.openModal({task})} className="btn btn-success" key={task.id} style={divStyle}>{task.perform_time}</button>
