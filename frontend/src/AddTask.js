@@ -8,7 +8,6 @@ class AddTask extends Component {
 
     constructor(props){
         super(props)
-        console.log(props.props.content)
         this.state = {
             isAddTaskModalOpened: false,
             device: '',
@@ -44,11 +43,7 @@ class AddTask extends Component {
           delivery_time: this.state.deliveryTime
         }
     
-        axios.post('http://0.0.0.0:8000/api/tasks/', {task})
-          .then(res => {
-            console.log(res);
-            console.log(res.data)
-          })
+        axios.post('http://0.0.0.0:8000/api/tasks/', {task});
     
         this.setState({
           device: '',
@@ -68,7 +63,6 @@ class AddTask extends Component {
               style={this.customStyles}
             >
               <form onSubmit={this.submitHolder}>
-
                 <div className='row'>
                   <input type='text' onChange={this.performTimeHolder} placeholder='perform time'/>
                 </div>

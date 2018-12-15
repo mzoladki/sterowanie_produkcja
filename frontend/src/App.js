@@ -29,7 +29,6 @@ class App extends Component {
     }
     
     axios.get('http://0.0.0.0:8000/api/tasks/').then(res => {
-      console.log(res.data)
       if (res.data.length > 0){
         let numberOfDevices = res.data[res.data.length-1].device
         let table = []
@@ -78,9 +77,7 @@ class App extends Component {
   submitHandler = (e) => {
     if (this.state.deletingMode === true){
       let url = 'http://0.0.0.0:8000/api/task-detail/?id=' + this.state.task.id
-      axios.delete(url).then( (res) => {
-        console.log(res)
-      });
+      axios.delete(url);
     }
     else{
       console.log(this.state.task)
@@ -89,8 +86,6 @@ class App extends Component {
         device: 1,
         perform_time: this.state.task.perform_time,
         delivery_time: this.state.task.delivery_time
-      }).then( (res) => {
-        console.log(res)
       });
     }
   }
@@ -123,12 +118,12 @@ class App extends Component {
           </br>
             {
               this.state.data.map((tasks, index) => {
-                return <div className="row Tasks" key={index}> <button>Device: {index + 1}</button>{tasks.map((task, index)=> {
+                return <div className="row Tasks" key={index}> <button>Workstation: {index + 1}</button>{tasks.map((task)=> {
                   let divStyle = {
                     width: task.perform_time * 20 + 1,
                   }
                 return (
-                  <button key={task.id} id={task.id} onClick={() => this.openModal({task})} className="btn btn-success" key={task.id} style={divStyle}>{task.perform_time}</button>
+                  <button key={task.id} id={task.id} onClick={() => this.openModal({task})} className="btn btn-success" style={divStyle}>{task.perform_time}</button>
                 )
                 })} 
                   </div>
