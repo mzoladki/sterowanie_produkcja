@@ -20,7 +20,7 @@ class DevicesView(APIView):
 class TasksView(APIView):
 
     def get(self, request, format=None):
-        tasks = Tasks.objects.all().order_by('device', '-perform_time')
+        tasks = Tasks.objects.all().order_by('device')
 
         serializer = TaskSerializer(tasks, many=True)
         return JsonResponse(serializer.data, safe=False)

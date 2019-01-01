@@ -96,7 +96,6 @@ class App extends Component {
       return(
         <div>
           <form onSubmit={this.submitHandler}>
-            <h3>Details</h3>
             <p><input onChange={ this.taskPerformTimeHandler } type='text' value={task.perform_time} /></p>
             <p><input onChange={ this.taskDeliveryTimeHandler } type='text' value={task.delivery_time} /></p>
             <button className='btn btn-primary'> Change </button>
@@ -134,7 +133,7 @@ class App extends Component {
           onRequestClose={this.closeModal}
           style={customStyles}
           >
-            <div>Our modal!</div>
+            <h3>Details</h3>
             <div>{this.modalContent()}</div>
             <button onClick={this.closeModal}>close</button>
           </Modal>

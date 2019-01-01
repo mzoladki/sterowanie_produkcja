@@ -62,6 +62,7 @@ class AddTask extends Component {
               onRequestClose={this.closeModal}
               style={this.customStyles}
             >
+              <h3>Add task</h3>
               <form onSubmit={this.submitHolder}>
                 <div className='row'>
                   <input type='text' onChange={this.performTimeHolder} placeholder='perform time'/>
